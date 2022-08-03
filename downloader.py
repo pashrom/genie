@@ -15,22 +15,34 @@ RETRY_TIMEOUT = 10
 
 
 class Downloader:
-    def __init__(self, folder_path=None):
-        self.folder_path = folder_path or self.get_output_folder()
+    def __init__(self, folder_path: str = None):
+        self.folder_path = self.get_output_folder(folder_path)
         self.urls = self.get_urls()
 
     @staticmethod
-    def get_urls():
+    def get_urls() -> list:
+        """
+        Reads default urls file and returns list of urls.
+        :return: list
+        """
         with open('urls.txt', 'r') as f:
             return f.read().replace('\n', ' ').split()
 
     @staticmethod
-    def get_output_folder():
-        default_folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'output')
-        os.makedirs(default_folder, exist_ok=True)
-        return default_folder
+    def get_output_folder(folder_path=None) -> str:
+        """
+        Creates output folder to download files to and returns it's path
+        :return: str
+        """
+        target_folder = folder_path or os.path.join(os.path.dirname(os.path.realpath(__file__)), 'output')
+        os.makedirs(target_folder, exist_ok=True)
+        return target_folder
 
-    def get_file(self, url):
+    def get_file(self, url) -> None:
+        """
+        Downloads file from url and stores in `self.folder_path`.
+        :param url: str.
+        """
         for attempt in range(MAX_ATTEMPTS):
             try:
                 r = requests.get(url)
@@ -48,7 +60,10 @@ class Downloader:
         else:
             logger.error(f'Failed for {url} after {MAX_ATTEMPTS} attempts')
 
-    def get_files(self):
+    def get_files(self) -> None:
+        """
+        Downloads all files from url list `self.urls` in parallel and stores in `self.folder_path`.
+        """
         pool = Pool(cpu_count() - 1)
         try:
             for _ in tqdm.tqdm(pool.imap_unordered(self.get_file, self.urls), total=len(self.urls)):
@@ -59,11 +74,11 @@ class Downloader:
 
 
 @click.command()
-@click.argument('folder_path', required=False)
-def main(folder_path=None):
-    Downloader(folder_path).get_files()
+@click.option('--folder', help='String representing absolute path for output folder, '
+                               'if not provided - default folder will be used')
+def main(folder=None):
+    Downloader(folder).get_files()
 
 
 if __name__ == '__main__':
     main()
-
