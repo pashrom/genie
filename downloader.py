@@ -1,13 +1,12 @@
 import logging
 import os
+import time
 from multiprocessing import Pool, cpu_count
-from requests import ConnectionError
 
 import click
 import requests
 import tqdm
-
-import time
+from requests import ConnectionError
 
 logger = logging.getLogger(__name__)
 
