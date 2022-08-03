@@ -3,7 +3,7 @@
 
 `python downloader.py`  to run for urls from urls.txt, saves to default folder 'output' in project root.  
 
-`python downloader.py --folder <absolute path>` to run for urls from urls.txt, saves to the given folder.
+`python downloader.py --folder <absolute path>` to run for urls from urls.txt, saves to the given folder.  
 
 
 #Homework Assignment - Python  
