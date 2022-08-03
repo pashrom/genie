@@ -1,11 +1,3 @@
-# Usage
-`pip install -r requirements.txt`
-
-`python downloader.py`  to run for urls from urls.txt, saves to default folder 'output' in project root.  
-
-`python downloader.py --folder <absolute path>` to run for urls from urls.txt, saves to the given folder.  
-
-
 #Homework Assignment - Python  
 Write a Python script that downloads files from the internet and saves them in a download directory.  
 The list of URLs to download will be provided in a simple text file. URLs are separated by a newline. Assume that the files are small, so
@@ -25,3 +17,11 @@ Consider the following and propose reasonable solutions for the following proble
 * How to handle cancellation? (i.e., the user presses CTRL+C)  
 Optional:  
 * How to handle retry in case of intermittent network errors? 
+
+
+# Usage
+`pip install -r requirements.txt`
+
+`python downloader.py`  to run for urls from urls.txt, saves to default folder 'output' in project root.  
+
+`python downloader.py --folder <absolute path>` to run for urls from urls.txt, saves to the given folder.
